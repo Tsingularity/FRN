@@ -98,7 +98,8 @@ for c in tqdm(catlist):
     for imkey in ims:
         # For each image:
         path = pather[imkey]
-        fname = os.path.join(str(c),path[path.rfind(os.path.sep)+1:path.rfind('.')]+'.png')
+        file = path[path.rfind(os.path.sep)+1:path.rfind('.')]+'.png'
+        fname = os.path.join(str(c),file)
         newpath = os.path.join(catpath,fname)
         pather_shrunk[imkey] = os.path.join(rel_path,fname)
         # Downsize the image to 84x84
@@ -110,14 +111,14 @@ for c in tqdm(catlist):
         p.save(newpath)
         # Downsize the bounding box annotations to 10x10
         boxes = annodict[imkey]
-        boxdict_shrunk[fname] = []
+        boxdict_shrunk[str(c)+'/'+file] = []
         for boxcode in boxes:
             box = boxdict[boxcode]
             xmin = box[0]
             xmax = box[2]+xmin
             ymin = box[1]
             ymax = box[3]+ymin
-            boxdict_shrunk[fname].append([xmin*10/w, ymin*10/h, xmax*10/w, ymax*10/h])
+            boxdict_shrunk[str(c)+'/'+file].append([xmin*10/w, ymin*10/h, xmax*10/w, ymax*10/h])
 torch.save(boxdict_shrunk, os.path.join(img_path,'box_coords.pth'))
 
 
