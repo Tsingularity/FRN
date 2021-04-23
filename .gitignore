@@ -1,3 +1,18 @@
+# specified for this repo
+*.jpg
+*.png
+*.log
+*.txt
+events.*
+*.m
+*.tar
+*.pth
+.DS_Store
+
+# but include these files
+!imgs/*.png
+!data/meta_iNat_split/*.pth
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
