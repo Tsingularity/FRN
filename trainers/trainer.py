@@ -7,7 +7,7 @@ import numpy as np
 import argparse
 from tqdm import tqdm
 from tensorboardX import SummaryWriter
-from .eval import meta_test 
+from .eval import meta_test
 sys.path.append('..')
 from datasets import dataloaders
 
@@ -70,7 +70,7 @@ def train_parser():
 
 
 def get_opt(model,args):
-    
+
     if args.opt == 'adam':
         optimizer = optim.Adam(model.parameters(),lr=args.lr,weight_decay=args.weight_decay)
     elif args.opt == 'sgd':
@@ -89,9 +89,9 @@ def get_opt(model,args):
 class Path_Manager:
 
     def __init__(self,fewshot_path,args):
-        
+
         self.train = os.path.join(fewshot_path,'train')
-        
+
         if args.pre:
             self.test = os.path.join(fewshot_path,'test_pre')
             self.val = os.path.join(fewshot_path,'val_pre') if not args.no_val else self.test
@@ -105,7 +105,7 @@ class Path_Manager:
 class Train_Manager:
 
     def __init__(self,args,path_manager,train_func):
-        
+
         seed = args.seed
         torch.manual_seed(seed)
         torch.cuda.manual_seed(seed)
@@ -124,13 +124,13 @@ class Train_Manager:
                     temp += ('_'+str(i))
 
                 suffix = '%s-lr_%.0e-gamma_%.0e-epoch_%d-drop%s-decay_%.0e-way_%d' % (args.opt,
-                    args.lr,args.gamma,args.epoch,temp,args.weight_decay,args.way)
+                    args.lr,args.gamma,args.epoch,temp,args.weight_decay,args.train_way)
             else:
                 suffix = '%s-lr_%.0e-gamma_%.0e-epoch_%d-stage_%d-decay_%.0e-way_%d' % (args.opt,
-                    args.lr,args.gamma,args.epoch,args.stage,args.weight_decay,args.way)
+                    args.lr,args.gamma,args.epoch,args.stage,args.weight_decay,args.train_way)
 
             name = "%s-%s"%(name,suffix)
-        
+
         self.logger = get_logger('%s.log' % (name))
         self.save_path = 'model_%s.pth' % (name)
         self.writer = SummaryWriter('log_%s' % (name))
@@ -144,7 +144,7 @@ class Train_Manager:
         self.args = args
         self.train_func = train_func
         self.pm = path_manager
-    
+
     def train(self,model):
 
         args = self.args
@@ -154,10 +154,10 @@ class Train_Manager:
         logger = self.logger
 
         optimizer,scheduler = get_opt(model,args)
-    
+
         val_shot = args.train_shot
         test_way = args.test_way
-    
+
         best_val_acc = 0
         best_epoch = 0
 
@@ -186,7 +186,7 @@ class Train_Manager:
                 logger.info("epoch %d/%d, iter %d:" % (e+1,total_epoch,iter_counter))
                 logger.info("train_acc: %.3f" % (train_acc))
 
-                model.eval()                    
+                model.eval()
                 with torch.no_grad():
                     val_acc,val_interval = meta_test(data_path=self.pm.val,
                                                     model=model,
@@ -229,7 +229,7 @@ class Train_Manager:
         logger.info('evaluating on test set:')
 
         with torch.no_grad():
-            
+
             model.load_state_dict(torch.load(self.save_path))
             model.eval()
 
@@ -243,5 +243,5 @@ class Train_Manager:
                                         transform_type=args.test_transform_type,
                                         query_shot=args.test_query_shot,
                                         trial=10000)
-            
+
                 logger.info('%d-way-%d-shot acc: %.2f\t%.2f'%(args.test_way,shot,mean,interval))
