@@ -6,7 +6,7 @@ This repository contains the reference Pytorch source code for the following pap
 
 [Davis Wertheimer](https://daviswer.github.io/)\*, [Luming Tang](http://lumingtang.info/)\*, [Bharath Hariharan](http://home.bharathh.info/) (\* denotes equal contribution)
 
-CVPR 2021
+CVPR 2021 ([video](https://www.youtube.com/watch?v=kbsRsbQKTRc))
 
 If you find our code or paper useful to your research work, please consider citing our work using the following bibtex:
 ```
