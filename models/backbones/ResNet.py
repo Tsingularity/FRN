@@ -189,10 +189,10 @@ class ResNet(nn.Module):
         return x
 
 
-def resnet12(drop_rate=0.1, dropblock_size=5, max_pool=True, **kwargs):
+def resnet12(drop_rate=0.0, max_pool=True, **kwargs):
     """Constructs a ResNet-12 model.
     """
-    model = ResNet(BasicBlock, [1, 1, 1, 1], max_pool=max_pool, **kwargs)
+    model = ResNet(BasicBlock, [1, 1, 1, 1], drop_rate=drop_rate, max_pool=max_pool, **kwargs)
     return model
 
 
