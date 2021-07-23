@@ -10,17 +10,17 @@ def auxrank(support):
     way = support.size(0)
     shot = support.size(1)
     support = support/support.norm(2).unsqueeze(-1)
-    L1 = torch.zeros(way**2-way).long().cuda()
-    L2 = torch.zeros(way**2-way).long().cuda()
+    L1 = torch.zeros((way**2-way)//2).long().cuda()
+    L2 = torch.zeros((way**2-way)//2).long().cuda()
     counter = 0
     for i in range(way):
         for j in range(i):
             L1[counter] = i
             L2[counter] = j
             counter += 1
-    s1 = support.index_select(0, L1) # s^2-s, s, d
-    s2 = support.index_select(0, L2) # s^2-s, s, d
-    dists = s1.matmul(s2.permute(0,2,1)) # s^2-s, s, s
+    s1 = support.index_select(0, L1) # (s^2-s)/2, s, d
+    s2 = support.index_select(0, L2) # (s^2-s)/2, s, d
+    dists = s1.matmul(s2.permute(0,2,1)) # (s^2-s)/2, s, s
     assert dists.size(-1)==shot
     frobs = dists.pow(2).sum(-1).sum(-1)
     return frobs.sum().mul(.03)
