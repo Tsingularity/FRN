@@ -63,7 +63,7 @@ class FRN(nn.Module):
         reg = support.size(1)/support.size(2)
         
         # correspond to lambda in the paper
-        lam = reg*alpha.exp()
+        lam = reg*alpha.exp()+1e-6
 
         # correspond to gamma in the paper
         rho = beta.exp()
