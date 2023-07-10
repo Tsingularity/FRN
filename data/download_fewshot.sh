@@ -29,10 +29,10 @@ gdownload 1BynNYtQM1i8Rv5_4i52CWhwgSWDwjVkc Aircraft_fewshot.tar
 conditional_tar Aircraft_fewshot.tar f6646b79d6223af5de175c4849eecf25
 
 # this section is for downloading meta-iNat and tiered meta-iNat
-# md5sum for the downloaded meta_inat.tar should be 01482d47c863005a048b0909f86fcaae
+# md5sum for the downloaded meta_inat.tar should be 335e4818995a615b0b5b7b2fc7665e24
 echo "downloading meta-iNat / tiered meta-iNat ..."
-gdownload 1ATRnifcZ7-_7YxXbKbCi6mL61hfk_YEJ meta_inat.tar
-conditional_tar meta_inat.tar 01482d47c863005a048b0909f86fcaae
+gdownload 1I8vdg1EV04a_4EYNEX_rKkrOKnavBQAM meta_inat.tar
+conditional_tar meta_inat.tar 335e4818995a615b0b5b7b2fc7665e24
 
 # this section is for downloading the mini-ImageNet
 # md5sum for the downloaded mini-ImageNet.tar should be 13fda464dcd4d283e953bfb6633176b8
